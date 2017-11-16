@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    {{template "include.html"}}
+</head>
+<body>
+
+{{template "header.html" .}}
+
+<div id="wrap">
+    <div class="container">
+
+        <div class="col-sm-3">
+            <div class="text-center">
+                <div></div>
+                <!-- <hr> -->
+                <h3><a href="{{.u.Url}}">{{.u.Nick}}</a></h3>
+                <pre>{{.u.Info}}</pre>
+
+                <table class="table">
+                    <tr>
+                        <td>Followers</td>
+                        <td>Following</td>
+                    </tr>
+                    <tr>
+                        <td>{{.u.Followers}}</td>
+                        <td>{{.u.Following}}</td>
+                    </tr>
+                    <tr>
+                        <td><td>
+                    </tr>
+                </table>
+
+                <h4>Hobby</h4>
+                <div>
+
+                    <a class="btn btn-xs btn-success">{{.}}</a>
+
+                </div>
+
+                <h4>最热文章</h4>
+                <div>. ..</div>
+
+                <h4>文章标签</h4>
+                <div>...</div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+
+            <h3>{{.u.Nick}}发表的文章</h3>
+            <div>
+                {{range $index,$value := .articles}}
+
+                <div>
+                    <h2><a href="/article/{{$value.Id}}">{{$value.Title}}</a></h2>
+
+                    <div>
+                        <span>{{$value.Time}}</span>
+
+                        {{if $.user}}
+                        {{if eq $value.Author.Id $.user.Id}}
+                        <span class="pull-right">
+									<a href="/article/edit/{{$value.Id}}">编辑</a> |
+									<a href="/article/del/{{$value.Id}}">删除</a>
+                            <!-- 	<form action="/article/del/{{$value.Id}}" method="post">
+                                    <input type="submit" value="删除">
+                                </form> -->
+								</span>
+                        {{end}}
+                        {{end}}
+                    </div>
+                    <div>
+                        <pre>{{$value.Content}}</pre>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+            <div>
+                <h3>{{.u.Nick}}最近发表的评论</h3>
+                <div>
+                    {{range .replys}}
+                    <div>
+                        <p>
+                            {{.Time}} 在<a href="/article/{{.Article.Id}}">{{.Article.Title}}</a>回复了
+                        <pre>{{.Content}}</pre>
+                        </p>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>

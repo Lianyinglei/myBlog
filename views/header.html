@@ -1,0 +1,18 @@
+<header>
+	<nav class="navbox">
+		<span>
+			<a href="/">极客社区</a>
+			<a href="/news">最新文章</a>
+		</span>
+
+		<span class="pull-right">
+			<!--{{if .user}}-->
+				<a href="/user/{{.user.Id}}">我的主页</a>
+				<a href="/setting">设置中心</a>
+				<a href="/logout">退出</a>
+			<!--{{else}}-->
+				<a href="/join">加入我们</a>
+			<!--{{end}}-->
+		</span>
+	</nav>
+</header>

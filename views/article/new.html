@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>创建文章</title>
+
+	{{template "include.html"}}
+</head>
+<body>
+
+{{template "header.html" .}}
+
+<div id="wrap">
+	<div class="container">
+		<div class="col-sm-7">
+			<form method="post">
+				<input name="title" class="form-control"  placeholder=" 请输入文章标题"/>
+				<br>
+				<textarea name="content" class="form-control" rows="20" placeholder="正文"></textarea>
+				<br>
+				<input class="btn btn-default" type="submit"/>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$("form").bind("submit", function(){
+		var tmp = ajaxSubmit(this, function(){
+			var ok = tmp.responseJSON.success;
+
+			//	返回服务器信息
+			if ( ok == true ){
+				alert("创建成功");
+				location.href='/article/'+tmp.responseJSON.content;
+			}else{
+				alert(tmp.responseJSON.content)
+			}
+        });
+        return false;
+	})
+</script>
+
+
+
+</body>
+</html>

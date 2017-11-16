@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    {{template "include.html"}}
+</head>
+<body>
+{{template "header.html" .}}
+<div class="col-sm-4">
+    <h2>Register</h2>
+    <div class='well'>
+        <form action="/user/register" method="post">
+            <div class="form-group">
+                <label>UserID</label>
+                <input class='form-control' name="userid" value="geek"  />
+            </div>
+            <div class="form-group">
+                <label>Nick</label>
+                <input class='form-control' name="nick">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class='form-control' name="pwd1" type="password" value="123"  />
+            </div>
+            <div class="form-group">
+                <label>Confirm</label>
+                <input class='form-control' name="pwd2" type="password" value="123"  />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input class='form-control' name="email" type="email" value="a@q.com"  />
+            </div>
+            <input class='btn btn-default' type="submit">
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" src="/static/js/jblog.js"></script>
+<script type="text/javascript">
+    $("form").bind("submit", function(){
+        var tmp = ajaxSubmit(this, function(){
+            var code = tmp.responseJSON.code;
+            var ok = tmp.responseJSON.success;
+
+           console.log(tmp.responseJSON)
+
+            //	返回服务器信息
+            // if ( code == 0 ) {
+            if ( ok == true ){
+                alert("成功");
+
+                location.href = "user/setting.html"
+                // alert(tmp.responseJSON.content);
+
+
+
+            }else{
+                alert(tmp.responseJSON.content)
+            }
+            return;
+
+            // 使用code表示
+            /*
+                200		ok
+                21x		login
+                    210	password
+                    211	block
+                22x		register
+                    220	..
+                    221	..
+            */
+            switch (code){
+                case 0:
+                    // success
+                    alert("success");
+                    break;
+                case 1:
+                    //	wrong password
+                    alert("wrong password");
+                    break;
+                case 2:
+                    //	confrim faild
+                    alert("confrim faild");
+                    break;
+            }
+
+        });
+        return false;
+    })
+</script>
+</body>
+</html>

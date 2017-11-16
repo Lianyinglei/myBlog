@@ -1,0 +1,18 @@
+header{
+	margin-bottom: 20px;
+}
+
+nav.navbox{
+	box-shadow: 0px 2px 4px #ccc;
+}
+
+nav.navbox a{
+	text-decoration: none;
+	display: inline-block;
+	padding: 12px;
+	color: #000;
+}
+
+nav.navbox a:hover, nav.navbox a.active{
+	background: #eee;
+}

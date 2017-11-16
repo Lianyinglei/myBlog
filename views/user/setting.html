@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Setting</title>
+
+	{{template "include.html"}}
+</head>
+<body>
+
+{{template "header.html" .}}
+
+<div id="wrap">
+	<div class="container">
+		
+		<div>
+			<div class="col-md-3">
+				<ul class="nav nav-pills nav-stacked ">
+					<li role="presentation" class='active' >
+						<a href="#userinfo" role="tab" data-toggle="tab">基本信息</a>
+					</li>
+					<li role="presentation">
+						<a href="#avator" role="tab" data-toggle="tab">头像设置</a>
+					</li>
+					<li role="presentation">
+						<a href="#account" role="tab" data-toggle="tab">帐号设置</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-7">
+				<div class="tab-content">
+
+					<div role="tabpanel" class="tab-pane active" id="userinfo">
+						
+						<h2 >基本信息</h2>
+						<hr>
+						<!-- {{.user}} -->
+						<form action="/setting" method="post" class='ajax'>
+							<input type="hidden" name="do" value="info">
+							<div class="form-group">
+								<label>UserID</label>
+								<input class="form-control" readonly="readonly" value="{{.user.Id}}"></input>
+							</div>
+							<div class="form-group">
+								<label>Nick</label>
+								<input class="form-control" name="nick" value="{{.user.Nick}}"></input>
+							</div>
+							<div class="form-group">
+								<label>Email</label>
+								<input class="form-control" name="email" value="{{.user.Email}}"></input>
+							</div>
+							<div class="form-group">
+								<label>Website</label>
+								<input class="form-control" name="website" value="{{.user.Url}}"></input>
+							</div>
+							<div class="form-group">
+								<label>Hobby</label>
+								<input class="form-control" name="hobby" value="{{.user.Hobby}}"></input>
+							</div>
+							<div class="form-group">
+								<label>About</label>
+								<textarea class="form-control" name="info">{{.user.Info}}</textarea>
+							</div>
+							<div>
+								<input class='btn btn-default' type="submit">
+							</div>
+						</form>
+						
+					</div>
+							
+					<div role="tabpanel" class="tab-pane " id="avator">
+
+					</div>
+
+					<div role="tabpanel" class="tab-pane" id="account">
+
+						<h2 >帐号设置</h2>
+						<hr>
+						<!-- {{.user}} -->
+
+						<h3>修改密码</h3>
+						<form method="post">
+							<input type="hidden" name="do" value="chpwd">
+							<div class="form-group">
+								<label>UserID</label>
+								<input class="form-control" readonly="readonly" value="{{.user.Id}}"></input>
+							</div>
+							<div class="form-group">
+								<label>Old Password</label>
+								<input class="form-control" name="pwd1" type="password" value=""></input>
+							</div>
+							
+							<div class="form-group">
+								<label>New Password</label>
+								<input class="form-control" name="pwd2" type="password" value=""></input>
+							</div>
+							<div class="form-group">
+								<label>Confirm</label>
+								<input class="form-control" name="pwd3" type="password" value=""></input>
+							</div>
+							<input class="btn btn-danger" type="submit" value="确认修改">
+						</form>
+
+						<hr>
+						<h3>删除帐号</h3>
+						<form action="/setting" method="post">
+							<input type="hidden" name="do" value="delAccount">
+							<div class="form-group">
+								<label>Old Password</label>
+								<input class="form-control" name="pwd" type="password" value=""></input>
+							</div>
+							<div>
+								<input class='btn btn-danger' type="submit" value="删除帐号">
+							</div>
+						</form>
+					</div>
+				
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+
+
+
+{{template "footer.html"}}
+
+<script type="text/javascript">
+		$("form").bind("submit", function(){
+			var tmp = ajaxSubmit(this, function(){
+				var code = tmp.responseJSON.code;
+				var ok = tmp.responseJSON.success;
+
+				//	返回服务器信息
+				if ( ok == true ){
+					alert("成功");
+					location.reload();
+				}else{
+					alert(tmp.responseJSON.content)
+				}
+	        });
+	        return false;
+		})
+</script>
+
+</body>
+</html>

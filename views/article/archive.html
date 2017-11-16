@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Archive</title>
+	{{template "head.html" .}}
+</head>
+<body>
+
+	{{template "header.html" .}}
+
+	<div id="wrap">
+	<div  class="container">
+		<div class="col-sm-9">
+
+			{{if .err }}
+
+				<pre>{{.err}}</pre>
+
+			{{else}}
+
+				{{range $idx,$val := .articles}}
+					<div class="article">
+						<h2><a href="/article/{{$val.Id}}">{{$val.Title}}</a></h2>
+						<p>
+							<span><a href="/user/{{$val.Author.Id}}">{{$val.Author.Nick}}</a></span>
+							<span>{{$val.Time}}</span>
+						</p>
+						<p>
+							{{range $val.Tags}}
+								<a href="/archive?tag={{.Name}}" class="btn btn-{{.RandColor}} btn-xs">{{.Name}}</a>
+							{{end}}
+						</p>
+						<div>
+							<pre>{{$val.Content}}</pre>
+						</div>
+					</div>
+				{{end}}
+
+			{{end}}
+
+			
+		</div>
+	</div>
+</body>
+</html>

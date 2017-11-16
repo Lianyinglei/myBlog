@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{.article.Title}} - {{.article.Author.Nick}}</title>
+
+	{{template "include.html" .}}
+
+	<style type="text/css">
+	.reply-box .reply-box{
+		margin-left: 50px;
+	}
+	</style>
+</head>
+<body>
+
+{{template "header.html" .}}
+
+
+
+<div id="wrap">
+	<div class="container">
+		<div class="col-sm-8">
+			<h2>{{.article.Title}}</h2>
+			<p>
+				<a href="/user/{{.article.Author.Id}}">{{.article.Author.Nick}}</a>
+
+				<span>{{.article.Time}}</span>
+				
+				<span>
+					{{ if $.user}}
+						{{if eq .article.Author.Id $.user.Id}}
+							<span class="pull-right">
+								<a href="/article/edit/{{.article.Id}}">编辑</a>
+							</span>
+						{{end}}
+					{{end}}
+				</span>
+
+			</p>
+			<div>
+				<pre>{{.article.Content}}</pre>
+			</div>
+
+			<hr>
+			{{.replyTree}}
+			<div>
+				{{define "replybox"}}
+					{{range $idx, $reply := .}}
+						<div class="reply-box">
+							<p>
+								<a href="/user/{{.Author.Id}}">{{.Author.Nick}}</a>
+								{{.Time}}
+								<span class="pull-right">
+									<a href="javascript:;" data-user="{{.Author.Nick}}" data-reply="{{.Id}}">回复</a>
+								</span>
+							</p>
+							<pre>{{.Reply.Content}}</pre>
+							<hr>
+							{{if .Childs}}
+								{{template "replybox" .Childs}}
+							{{end}}
+						</div>
+					{{end}}
+				{{end}}
+			</div>
+
+			{{template "replybox" .replyTree}}
+
+			<!-- <div>
+			{{ range .article.Replys}}
+				<div>
+					<p>
+						<a href="/user/{{.Author.Id}}">{{.Author.Nick}}</a>
+						{{.Time}}
+						<span class="pull-right">
+							<a href="javascript:bindParent({{.Id}}, '{{.Author.Nick}}')">回复</a>
+						</span>
+					</p>
+					<pre>{{.Content}}</pre>
+				</div>
+			{{end}}
+			</div> -->
+			<div>
+				<form action="/reply/new" method="post">
+					<textarea name="content" class="form-control"></textarea>
+					<input type="hidden" name="article_id" value="{{.article.Id}}">
+					<input type="hidden" name="parent_id">
+					<input type="submit" class="btn btn-default">
+				</form>
+			</div>
+		</div>
+
+		<div class="col-sm-3">
+			<h4>本文标签</h4>
+			{{range .article.Tags}}
+				<a href="/archive?tag={{.Name}}" class="btn btn-{{.RandColor}} btn-xs">{{.Name}}</a>
+			{{end}}
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	function bindParent(id, nick){
+		$("[name=parent_id]").val(id);
+		$("[name=content]").val('@'+nick+' ').focus();
+	}
+	$('a[data-reply]').click(function(){
+		bindParent($(this).data('reply'), $(this).data('user'));
+	});
+	$("form").bind("submit", function(){
+		var tmp = ajaxSubmit(this, function(){
+			var ok = tmp.responseJSON.success;
+
+			//	返回服务器信息
+			if ( ok == true ){
+				alert("创建评论成功");
+				location.reload();
+			}else{
+				alert(tmp.responseJSON.content)
+			}
+        });
+        return false;
+	})
+</script>
+
+</body>
+</html>
