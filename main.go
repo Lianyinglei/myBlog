@@ -1,10 +1,10 @@
 package main
 
 import (
-	_ "myProfile/routers"
+	_ "myBlog/routers"
 	"github.com/astaxie/beego"
-	_ "myProfile/models"
-	"myProfile/models/class"
+	_ "myBlog/models"
+	"myBlog/models/class"
 
 
 )

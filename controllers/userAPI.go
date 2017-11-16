@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	orm2 "github.com/astaxie/beego/orm"
-	"myProfile/models/class"
+	"myBlog/models/class"
 	"github.com/astaxie/beego/validation"
 
 	_"time"

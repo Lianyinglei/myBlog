@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"myProfile/controllers"
+	"myBlog/controllers"
 	"github.com/astaxie/beego"
 )
 

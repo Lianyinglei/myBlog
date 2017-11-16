@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/astaxie/beego/orm"
 	_ "github.com/Go-SQL-Driver/MySQL"
-	"myProfile/models/class"
+	"myBlog/models/class"
 
 	//"fmt"
 	"fmt"
